@@ -40,3 +40,4 @@ UDSU-Assistance/
 ├─ requirements.txt        # зависимости Python
 ├─ README.md               # описание проекта
 └─ run.py                  # единый запуск проекта (опционально)
+
