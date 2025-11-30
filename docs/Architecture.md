@@ -1,25 +1,42 @@
+
+# структура папок проекта
 UDSU-Assistance/
 │
-├─ bot/                  # код Telegram/VK бота
-│   └─ handlers.py
-│   └─ main.py
+├─ bot/                   # код Telegram и VK ботов
+│   ├─ __init__.py
+│   ├─ main.py            # точка входа бота
+│   ├─ handlers.py        # обработка сообщений
 │
-├─ backend/              # серверная часть
-│   └─ api.py            # основной API для бота
-│   └─ processing.py     # обработка запросов, взаимодействие с NLP
+├─ backend/                # серверная часть (API)
+│   ├─ __init__.py
+│   ├─ api.py             # основной API для бота
+│   ├─ processing.py      # логика работы с NLP и БД
+│   └─ utils.py           # вспомогательные функции
 │
-├─ nlp/                  # нейронная сеть
-│   └─ model.py          # загрузка модели, генерация/классификация
-│   └─ prompt_engineering.py
+├─ nlp/                    # офлайн-модель
+│   ├─ __init__.py
+│   ├─ model.py           # загрузка модели, генерация ответа
+│   └─ prompt_engineering.py # функции подготовки промптов
 │
-├─ db/                   # база знаний
-│   └─ schema.sql
-│   └─ seed_data.json
+├─ db/                     # база знаний / данные
+│   ├─ schema.sql          # структура базы данных
+│   ├─ seed_data.json      # начальные данные
+│   └─ db_utils.py         # функции работы с базой
 │
-├─ admin_panel/           # опционально
-│   └─ web_interface.py
 │
-├─ tests/                # тесты для компонентов
+├─ tests/                  # тесты проекта
+│   ├─ test_bot.py
+│   ├─ test_backend.py
+│   └─ test_nlp.py
 │
-├─ requirements.txt
-└─ README.md
+├─ docs/                   # документация
+│   ├─ Specification.docs
+│   ├─ Architecture.md
+│   ├─ Architecture.png
+|   ├─ Roadmap.png
+|   └─ Concept.docs
+|   
+│
+├─ requirements.txt        # зависимости Python
+├─ README.md               # описание проекта
+└─ run.py                  # единый запуск проекта (опционально)
