@@ -4,7 +4,7 @@ type TError = {
 }
 
 export const codes: { [key: number]: string } = {
-    [100]: 'json parse error',
+    [100]: 'bad request error',
     [9000]: 'unknown error'
 }
 

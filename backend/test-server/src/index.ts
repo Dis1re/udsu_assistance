@@ -3,6 +3,7 @@ import CONFIG from './config';
 import Answer from './application/Answer';
 import plugLM from './application/languageModel/plugLM';
 import plugDB from './application/dataBase/plugDB';
+import { TError, TRequest } from './application/types';
 
 const { HOST, PORT } = CONFIG;
 
@@ -12,15 +13,15 @@ const db = plugDB;
 const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
-    const data = req.method === 'POST' ? await getRequestBody(req) : req.url;
-
-    const answer = result(data);
+    const answer = req.method === 'POST' ?
+        resultPOST(await getRequestBody<TRequest>(req)) :
+        resultGET(req.url);
 
     res.statusCode = 200;
     res.end(JSON.stringify(new Answer(answer)));
 });
 
-const getRequestBody = (request: http.IncomingMessage): Promise<any> => {
+const getRequestBody = <T>(request: http.IncomingMessage): Promise<T | TError> => {
     return new Promise(resolve => {
         let body = '';
 
@@ -30,7 +31,7 @@ const getRequestBody = (request: http.IncomingMessage): Promise<any> => {
 
         request.on('end', () => {
             try {
-                const request = JSON.parse(body);
+                const request: T = JSON.parse(body);
                 resolve(request);
             } catch (error) {
                 resolve({ error: 100 });
@@ -39,7 +40,7 @@ const getRequestBody = (request: http.IncomingMessage): Promise<any> => {
     });
 }
 
-const result = (data: any) => {
+const resultPOST = (data: any): any => {
     let dbAnswer = '';
     Object.values(neuro.getTags(data.message || '')).forEach(tags => tags.forEach(tag => dbAnswer += `${db.getInfo(tag)}|`));
     return {
@@ -49,6 +50,8 @@ const result = (data: any) => {
         dbMessage: dbAnswer
     };
 }
+
+const resultGET = (url?: string): any => resultPOST(url);
 
 server.listen(PORT, HOST, () => {
     console.log(`Сервер работает на http://${HOST}:${PORT}`);
