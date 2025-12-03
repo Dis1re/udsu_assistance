@@ -1,6 +1,6 @@
-import { LanguageModel } from "./languageModel";
+import { ILanguageModel } from "./languageModel";
 
-const plugLM: LanguageModel = {
+const plugLM: ILanguageModel = {
     getTags: (message, context) => ({
         ['money_help']: ['mat_help', 'dekanat'],
         ['physic_lesson']: ['map', 'dating', 'timesheet']

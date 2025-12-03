@@ -1,6 +1,6 @@
-import { DataBase } from "./dataBase";
+import { IDataBase } from "./dataBase";
 
-const plugDB: DataBase = {
+const plugDB: IDataBase = {
     getInfo: tag => '12345678'
 };
 
