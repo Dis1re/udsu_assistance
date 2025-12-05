@@ -6,15 +6,16 @@
     - /backend               ( серверная часть (API) )
     - /nlp                   ( офлайн-модель )
     - /db                    ( база знаний / данные )
-        - /faq_list.txt        ( список первоначальных тем, вопросов и ответов )
+        - faq_list.txt        ( список первоначальных тем, вопросов и ответов )
+        - udsu_assistance_bd.sql (база данных для импорта)
     - /tests                 ( тесты проекта )
 - /docs                  ( документация )
-    - /Specification.docs
+    - /Specification.docs     ( подробности работы условные)
     - /ProjectArch.md         ( Технические подробности работы приложения )
     - /Architecture.png
     - /DB.md
     - /Roadmap.png
-    - /Concept.docs
+    - /Concept.docs           ( концепт проекта в свободном стиле )
     - /LICENSE
 - /README.md
 
