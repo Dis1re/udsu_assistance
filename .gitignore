@@ -33,4 +33,11 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+# Python
+
+# token
 src/bot/token.py
+
+#venv
+src/bot/venv/
