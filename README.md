@@ -5,7 +5,7 @@
     - единоразово установить виртуальное окружение для python
     cd src/bot/
     python -m venv venv
-    venv\Scripts\activate.bat
+    venv\Scripts\activate
     - установить зависимости 
     pip install -r requirements.txt
 2) установить бэкенд:
