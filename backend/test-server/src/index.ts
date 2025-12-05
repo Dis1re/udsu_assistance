@@ -4,11 +4,13 @@ import Answer from './application/Answer';
 import plugLM from './application/languageModel/plugLM';
 import plugDB from './application/dataBase/plugDB';
 import { TError, TRequest } from './application/types';
+import { IDataBase } from './application/dataBase/dataBase';
+import { ILanguageModel } from './application/languageModel/languageModel';
 
 const { HOST, PORT } = CONFIG;
 
-const neuro = plugLM;
-const db = plugDB;
+const neuro: ILanguageModel = plugLM;
+const db: IDataBase = plugDB;
 
 const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');

@@ -4,8 +4,9 @@ export type TMessage = {
 }
 
 export type TRequest = {
+    message: TMessage,
     history?: TMessage[],
-    message: TMessage
+    tags?: string[]
 }
 
 export type TError = {
