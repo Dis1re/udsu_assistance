@@ -15,9 +15,11 @@ const db: IDataBase = plugDB;
 const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
+    const body = await getRequestBody<TRequest>(req);
     const answer = req.method === 'POST' ?
-        resultPOST(await getRequestBody<TRequest>(req)) :
+        ('error' in body ? body : (resultPOST(body))) :
         resultGET(req.url);
+
     res.statusCode = 200;
     res.end(JSON.stringify(new Answer(answer)));
 });
@@ -41,25 +43,27 @@ const getRequestBody = <T>(request: http.IncomingMessage): Promise<T | TError> =
     });
 }
 
-const resultPOST = (data: any): TResponse | TError => {
-    if (data.type == EMesType.text){
-        return {
-            text: "ответ бэка: " + data.text,
-            buttons: []
-        }
-    } else {
-        if (data.type == EMesType.tag) {
+const resultPOST = (data: TRequest): TResponse | TError => {
+    switch (data.type) {
+        case EMesType.text:
+            return {
+                text: "ответ бэка: " + data.text,
+                buttons: []
+            }
+        case EMesType.tag:
             return {
                 text: "ответ бэка тэговый: " + data.text,
                 buttons: []
             }
-        } else {
+        default:
             return ({ error: 200 });
-        }
     }
 }
 
-const resultGET = (url?: string): TResponse | TError => resultPOST(url);
+const resultGET = (url?: string): TResponse | TError => ({
+    text: `GET request ${url}`,
+    buttons: []
+});
 
 server.listen(PORT, HOST, () => {
     console.log(`Сервер работает на http://${HOST}:${PORT}`);

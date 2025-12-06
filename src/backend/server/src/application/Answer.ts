@@ -16,11 +16,11 @@ class Answer {
 
     constructor(data: TResponse | TError) {
         if (data instanceof Object && 'error' in data) {
-            const code = (data as { error?: number }).error || 9000;
+            const code = data.error || 9000;
             this.result = 'error';
             this.error = {
                 code: code,
-                text: codes[code] || codes[9000]
+                text: codes[code] || 'unknown error'
             };
         } else {
             this.result = 'ok';
