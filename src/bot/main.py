@@ -30,7 +30,6 @@ def post_to_server(user_id: int, message: str):
         if response.status_code == 200:
             print(f"Успешно отправлено на сервер: {data}")
             data = response.json().get("data")
-            print(data)
             return data.get("text", "Сервер не прислал ответа.")
         else:
             print(f"Ошибка при отправке на сервер: {response.status_code}")

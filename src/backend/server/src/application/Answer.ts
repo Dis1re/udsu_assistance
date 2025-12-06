@@ -1,3 +1,5 @@
+import { TResponse } from "./types";
+
 type TError = {
     code: number;
     text: string;
@@ -8,7 +10,7 @@ export const codes: { [key: number]: string } = {
     [9000]: 'unknown error'
 }
 
-class Answer<TResponse> {
+class Answer {
     result: 'ok' | 'error';
     data?: TResponse;
     error?: TError;
