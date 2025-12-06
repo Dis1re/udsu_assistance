@@ -1,16 +1,9 @@
 import * as http from 'http';
 import CONFIG from './config';
 import Answer from './application/Answer';
-import plugLM from './application/languageModel/plugLM';
-import plugDB from './application/dataBase/plugDB';
 import { EMesType, TError, TRequest, TResponse } from './application/types';
-import { IDataBase } from './application/dataBase/dataBase';
-import { ILanguageModel } from './application/languageModel/languageModel';
 
 const { HOST, PORT } = CONFIG;
-
-const neuro: ILanguageModel = plugLM;
-const db: IDataBase = plugDB;
 
 const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
