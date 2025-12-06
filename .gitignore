@@ -37,7 +37,9 @@ Thumbs.db
 # Python
 
 # token
-src/bot/token.py
+src/bot/token.py 
+src/bot/vk_token.py
 
 #venv
 src/bot/venv/
+/src/bot/__pycache__

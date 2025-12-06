@@ -1,3 +1,5 @@
+import { TResponse } from "./types";
+
 type TError = {
     code: number;
     text: string;
@@ -8,12 +10,12 @@ export const codes: { [key: number]: string } = {
     [9000]: 'unknown error'
 }
 
-class Answer<T> {
+class Answer {
     result: 'ok' | 'error';
-    data?: T;
+    data?: TResponse;
     error?: TError;
 
-    constructor(data: T) {
+    constructor(data: TResponse) {
         if (data instanceof Object && 'error' in data) {
             const code = (data as { error?: number }).error || 9000;
             this.result = 'error';

@@ -1,12 +1,26 @@
-export type TMessage = {
+export enum EMesType {
+    text = 'text',
+    tag = 'tag'
+}
+
+export type TVKButton = {
+    action: {
+        type: string,
+        payload: string,
+        label: string
+    },
+    color: string
+}
+
+export type TResponse = {
     text: string,
-    author: 'user' | 'bot'
+    buttons: TVKButton[]
 }
 
 export type TRequest = {
-    message: TMessage,
-    history?: TMessage[],
-    tags?: string[]
+    user_id: number,
+    type: EMesType,
+    text: string
 }
 
 export type TError = {
