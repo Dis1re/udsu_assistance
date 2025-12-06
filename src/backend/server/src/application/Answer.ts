@@ -1,21 +1,20 @@
-import { TResponse } from "./types";
-
-type TError = {
-    code: number;
-    text: string;
-}
+import { TError, TResponse } from "./types";
 
 export const codes: { [key: number]: string } = {
     [100]: 'bad request error',
+    [200]: 'unknown message type',
     [9000]: 'unknown error'
 }
 
 class Answer {
     result: 'ok' | 'error';
     data?: TResponse;
-    error?: TError;
+    error?: {
+        code: number;
+        text: string;
+    };
 
-    constructor(data: TResponse) {
+    constructor(data: TResponse | TError) {
         if (data instanceof Object && 'error' in data) {
             const code = (data as { error?: number }).error || 9000;
             this.result = 'error';

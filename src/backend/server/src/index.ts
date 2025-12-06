@@ -41,7 +41,7 @@ const getRequestBody = <T>(request: http.IncomingMessage): Promise<T | TError> =
     });
 }
 
-const resultPOST = (data: any): TResponse => {
+const resultPOST = (data: any): TResponse | TError => {
     if (data.type == EMesType.text){
         return {
             text: "ответ бэка: " + data.text,
@@ -54,15 +54,12 @@ const resultPOST = (data: any): TResponse => {
                 buttons: []
             }
         } else {
-            return {  // переписать нормально под тип Error
-                text: "ошибка",
-                buttons: []
-            }
+            return ({ error: 200 });
         }
     }
 }
 
-const resultGET = (url?: string): any => resultPOST(url);
+const resultGET = (url?: string): TResponse | TError => resultPOST(url);
 
 server.listen(PORT, HOST, () => {
     console.log(`Сервер работает на http://${HOST}:${PORT}`);
