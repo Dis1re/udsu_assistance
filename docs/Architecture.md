@@ -50,7 +50,7 @@
 ### структура json_request для post запроса от бота к серверу
 ``` json
 {
-    "user_id": "user_id"
+    "user_id": "user_id",
     "type": "text" | "tag" | "user",    // request - текстовый запрос пользователя, data="текст запроса пользователя"
                                         // tag - нажатие на кнопку тега, data="payload от тега"
                                         // user - нажатие на /start, data="vk_id пользователя"
