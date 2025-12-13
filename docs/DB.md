@@ -1,21 +1,30 @@
 # Описание Базы данных udsu_assistance_db
 
-## 1. tags
-### Список всех тегов.
+## Сущности
+
+1. Пользователь
+2. FAQ элемент
+
+## Таблицы
+
+### Пользователь
+
+**Таблица users**
+| поле | тип | назначение |
+|-|-|-|
+| id | integer PK | уникальный ID |
+| vk_id | integer |	вк id пользователя |
+
+### FAQ элемент
+
+**Таблица topics**
 
 | поле | тип | назначение |
 |-|-|-|
 | id | integer PK | уникальный ID |
-| tag_name | text(unique) |	имя тега: schedule, dormitory, infrastructure |
-| description | text | (опционально) описание тега |
-
-## 2. faq_entries
-### Хранит все ответы, которые способен дать бот.
-
-| поле | тип | назначение |
-|-|-|-|
-| id | integer PK | уникальный ID |
-| question | text |	пример вопроса (для разработчиков) |
-| answer_text | text | готовый текст ответа |
-| tag_id | integer FK -> tags.id | к какому тегу относится |
-| updated_at | datetime | дата последнего обновления |
+| parent_id | integer FK -> Topic.id | id родительского элемента из этой же таблицы |
+| tag | text | текст тега |
+| path | UNIQUE TEXT | путь из тегов с разделением "/" exm: "root/tag1/podtag2" |
+| topic | text | тема |
+| content | text | текст темы |
+| updated_at | date | время обновления|
