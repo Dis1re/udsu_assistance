@@ -1,23 +1,18 @@
 import * as http from 'http';
 import CONFIG from './config';
 import Answer from './application/Answer';
-import plugLM from './application/languageModel/plugLM';
-import plugDB from './application/dataBase/plugDB';
 import { EMesType, TError, TRequest, TResponse } from './application/types';
-import { IDataBase } from './application/dataBase/dataBase';
-import { ILanguageModel } from './application/languageModel/languageModel';
 
 const { HOST, PORT } = CONFIG;
-
-const neuro: ILanguageModel = plugLM;
-const db: IDataBase = plugDB;
 
 const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
+    const body = await getRequestBody<TRequest>(req);
     const answer = req.method === 'POST' ?
-        resultPOST(await getRequestBody<TRequest>(req)) :
+        ('error' in body ? body : (resultPOST(body))) :
         resultGET(req.url);
+
     res.statusCode = 200;
     res.end(JSON.stringify(new Answer(answer)));
 });
@@ -41,28 +36,27 @@ const getRequestBody = <T>(request: http.IncomingMessage): Promise<T | TError> =
     });
 }
 
-const resultPOST = (data: any): TResponse => {
-    if (data.type == EMesType.text){
-        return {
-            text: "ответ бэка: " + data.text,
-            buttons: []
-        }
-    } else {
-        if (data.type == EMesType.tag) {
+const resultPOST = (data: TRequest): TResponse | TError => {
+    switch (data.type) {
+        case EMesType.text:
+            return {
+                text: "ответ бэка: " + data.text,
+                buttons: []
+            }
+        case EMesType.tag:
             return {
                 text: "ответ бэка тэговый: " + data.text,
                 buttons: []
             }
-        } else {
-            return {  // переписать нормально под тип Error
-                text: "ошибка",
-                buttons: []
-            }
-        }
+        default:
+            return ({ error: 200 });
     }
 }
 
-const resultGET = (url?: string): any => resultPOST(url);
+const resultGET = (url?: string): TResponse | TError => ({
+    text: `GET request ${url}`,
+    buttons: []
+});
 
 server.listen(PORT, HOST, () => {
     console.log(`Сервер работает на http://${HOST}:${PORT}`);
